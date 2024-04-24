@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+
+    <style>
+        body {
+            background: linear-gradient(120deg, #2980b9, #8e44ad);
+        }
+
+        form {
+            width: 430px;
+            height: 350px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            margin: 200px auto;
+            /* background-color: #4FC3F7; */
+            background-color: rgba(242, 246, 249, 0.5);
+
+        }
+
+        .detail{
+            width: 180px;
+            height: 20px;
+            border-radius: 10px;
+        }
+
+        td {
+            text-align: left;
+            padding-left: 10px;
+            padding-top: 16px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <form action="http://127.0.0.1:8080/booked" method="post" id="bookform">
+
+
+        <h1>Book Here</h1>
+        <table>
+
+            <tr>
+                <td><label for="name"> Your Username: </label></td>
+                <td><input type="text" id="name" class="detail" placeholder="Enter your name" name="username"></td>
+                <td><span id="ferr"></span></td>
+            </tr>
+
+            <tr>
+                <td> <label for="pass">Your Password:</label></td>
+                <td> <input type="password" id="pass" name="pas" class="detail" placeholder="User Password for payment"></td>
+                <td><span id="perr"></span></td>
+            </tr>
+
+            <tr>
+                <td> <label for="count">Total Tickets: </label></td>
+                <td> <input type="number" id="count" class="detail" placeholder="Enter no. of tickets you want to buy" name="tTickets"></td>
+                <td><span id="cerr"></span></td>
+            </tr>
+
+            <tr>
+                <td> <label for="date">Date of Travelling: </label></td>
+                <td> <input type="date" id="date" class="detail" placeholder="Date of travelling" name="bookdate"  min="2024-05-01"  max="2024-08-14"></td>
+                <td><span id="derr"></span></td>
+            </tr>
+
+            <tr>
+                <td colspan="2"> <input type="checkbox" id="agree">
+                    <label for="agree" id="agree" style="font-size: 15px;">I agree to the terms and conditions</label>
+                </td>
+                <td></td>
+            </tr>
+
+
+        </table>
+        <button id="btn">Make Payment</button>
+       
+        <input type="reset">
+
+
+    </form>
+
+    <script>
+
+        var agree = document.querySelector("#agree");
+        var btn = document.querySelector("#btn");
+
+        btn.hidden = true;
+
+        agree.addEventListener("change", function (event) {
+
+            if (this.checked) {
+                btn.hidden = false;
+            } else {
+                btn.hidden = true;
+            }
+
+        });
+
+
+
+        var bookform = document.querySelector("#bookform");
+        bookform.addEventListener("submit", function (event) {
+            // event.preventDefault();
+            if (validate()) {
+                alert("Booking successfully");
+            }
+            else{
+                event.preventDefault();
+            }
+        });
+
+        function validate() {
+            let isValid = true;
+            var name = document.querySelector("#name").value; 
+            var pass = document.querySelector("#pass").value;          
+            var count = document.querySelector("#count").value;
+            var date = document.querySelector("#date").value;
+            var ferr = document.querySelector("#ferr");
+            var perr = document.querySelector("#perr");
+            var cerr = document.querySelector("#cerr");
+            var derr = document.querySelector("#derr");
+          
+            if (name === "") {
+                ferr.innerHTML = "Required!";
+                isValid = false;
+            }
+
+            if (pass === "") {
+                perr.innerHTML = "Required!";
+                isValid = false;
+            }
+         
+            if (count === "" || count<0) {
+                cerr.innerHTML = "Req.! or >0";
+                isValid = false;
+            }
+            if (date === "" || date< new Date()) {
+                derr.innerHTML = "Required!";
+                isValid = false;
+            }
+
+
+            return isValid;
+        }
+
+    </script>
+
+</body>
+
+</html>
